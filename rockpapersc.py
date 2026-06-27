@@ -1,10 +1,39 @@
 from tkinter import *
 import tkinter.font as fo #font
+import random
 
 root = Tk()
 
 root.geometry('800x512')
 root.title('Rock Paper Scissors')
+
+possiblechoices = ['rock','paper','scissors']
+
+pscore = 0
+cscore = 0
+
+def playgame(playinput):
+    global pscore, cscore
+    computerinput = random.choice(possiblechoices)
+
+    if playinput == computerinput:
+        result = 'Tie.'
+
+    elif (playinput == 'paper' and computerinput == 'scissors') or (playinput == 'rock' and computerinput == 'paper') or (playinput == 'scissors' and computerinput == 'rock'):
+        result = 'You lose...'
+        cscore += 1
+        compscore.config(text = cscore)
+
+    else:
+        result = 'You win!'
+        pscore += 1
+        playscore.config(text = pscore)
+
+    playerchoice.config(text = 'PLAYER CHOSE: '+ playinput)
+    botchoice.config(text = 'COMPUTER CHOSE: '+ computerinput)
+    results.config(text = 'Results: '+ result)
+    
+
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -25,7 +54,7 @@ selectop.grid(row = 1, column = 0, columnspan = 2, pady = 20)
 
 # ---------------------------------------------------------------------------------------------
 
-compscoretitle = Label(topframe, text = 'COM:', fg = 'grey', font = font1) #the labels for the score (not the score itself)
+compscoretitle = Label(topframe, text = 'CPU:', fg = 'grey', font = font1) #the labels for the score (not the score itself)
 compscoretitle.grid(row = 0, column = 2)
 
 playscoretitle = Label(topframe, text = 'PLA:', fg = 'grey', font = font1) #the labels for the score (not the score itself)
@@ -44,13 +73,13 @@ playscore.grid(row = 1, column = 3)
 middleframe = Frame(root) #code for middleframe under here
 middleframe.pack(pady = 20)
 
-rockwidget = Button(middleframe, text = 'Rock', bg = 'grey', fg = 'white', font = font2, width = 8) #buttons for rock, paper, scissors
+rockwidget = Button(middleframe, text = 'Rock', bg = 'grey', fg = 'white', font = font2, width = 8, command = lambda:playgame('rock')) #buttons for rock, paper, scissors
 rockwidget.grid(row = 0, column = 0, padx = 20)
 
-paperwidget = Button(middleframe, text = 'Paper', bg = 'grey', fg = 'white', font = font2, width = 8)
+paperwidget = Button(middleframe, text = 'Paper', bg = 'grey', fg = 'white', font = font2, width = 8, command = lambda:playgame('paper'))
 paperwidget.grid(row = 0, column = 1, padx = 20)
 
-scissorswidget = Button(middleframe, text = 'Scissors', bg = 'grey', fg = 'white', font = font2, width = 8)
+scissorswidget = Button(middleframe, text = 'Scissors', bg = 'grey', fg = 'white', font = font2, width = 8, command = lambda:playgame('scissors'))
 scissorswidget.grid(row = 0, column =  2, padx = 20)
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -59,9 +88,12 @@ bottomframe = Frame(root) #code for bottomframe here
 bottomframe.pack()
 
 results = Label(bottomframe, text = 'Results: ', fg = 'grey', font = font2)
-results.grid(row = 0, column = 0, columnspan = 3)
+results.grid(row = 0, column = 0, columnspan = 3, pady = 25)
 
-compresulttitle = Label(bottomframe, text = 'COM:', fg = 'grey', font = font2)
+botchoice = Label(bottomframe, text = 'COMPUTER CHOSE: ', fg = 'grey', font = font1)
+botchoice.grid(row = 1, column = 0, padx = 20)
 
+playerchoice = Label(bottomframe, text = 'PLAYER CHOSE: ', fg = 'grey', font = font1)
+playerchoice.grid(row = 1, column = 1, padx = 20)
 
 root.mainloop()
