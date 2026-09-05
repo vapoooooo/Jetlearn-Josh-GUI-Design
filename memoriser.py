@@ -20,6 +20,14 @@ def savefile():
             print(i, file = filec)
         valuelist.delete(0, END)
 
+def openfile():
+    fileread = askopenfile(filetypes = [('Text Document', '.txt')])
+    if fileread is not None:
+        valuelist.delete(0, END)
+        filem = fileread.readlines()
+        for i in filem:
+            valuelist.insert(END, i)
+
 root = Tk()
 
 savebutton = Button(root, text = 'SAVE', command = savefile)
@@ -28,7 +36,7 @@ savebutton.grid(row = 0, column = 0, pady = 15, padx = 15)
 addvalue = Entry(root)
 addvalue.grid(row = 1, column = 0, columnspan = 2, pady = 10)
 
-openbutton = Button(root, text = 'OPEN')
+openbutton = Button(root, text = 'OPEN', command = openfile)
 openbutton.grid(row = 0, column = 1, padx = 15)
 
 addbutton = Button(root, text = 'ADD VALUE', command = addingvalue)
