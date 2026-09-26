@@ -91,6 +91,16 @@ def openfiles():
     else:
         showerror('error','File not opened.')
 
+def displayinfo(event):
+    infowidget = Toplevel(root)
+    selected = filelist.curselection()
+    selectedname = filelist.get(selected)
+    details = contactlist.get(selectedname)
+    textdetails = f"Name: {selectedname} \nAddress: {details[0]} \nMobile: {details[1]} \nEmail: {details[2]} \nBirthday: {details[3]}"
+    detailslabel = Label(infowidget, text = textdetails)
+    detailslabel.pack()
+
+
 
 topframe = Frame(root) #--------------------------------------------- topframe -------------------------------------------------------------------------------------------
 topframe.pack()
@@ -102,6 +112,7 @@ middleframe = Frame(root) #------------------------------------------- middlefra
 middleframe.pack()
 
 filelist = Listbox(middleframe) # listbox --|0
+filelist.bind('<Double-Button-1>', displayinfo)
 filelist.grid(row = 0, column = 2, rowspan = 5, padx = 15)
 
 namelabel = Label(middleframe, text = 'Name: ')
